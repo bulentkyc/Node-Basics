@@ -1,0 +1,14 @@
+{
+  "name": "node-basics",
+  "version": "1.0.0",
+  "description": "With this project we'll learn Node Js Basics",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bulent Kyc",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
