@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-
+const dbURI = `mongodb+srv://bzs:3YVVYOWCCCH6YgEX@attendancetracker.ha9nd.mongodb.net/bulent-test?retryWrites=true&w=majority`;
 
 const connectDB = async () => {
     try {

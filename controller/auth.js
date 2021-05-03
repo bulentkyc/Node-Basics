@@ -7,7 +7,7 @@ exports.registerGet = (req, res) => {
     );    
 }
 
-exports.registerPost = (req, res) => {
+exports.registerPost = async (req, res) => {
     //1. Is user registered
     //2. If yes, reject and inform the user
     //3. If no, check all rules and save
@@ -19,25 +19,76 @@ exports.registerPost = (req, res) => {
  */
     const {userName, email, pass} = req.params;
 
+    let response='';
+
     //1. Is user registered
-    users.find({email}, (err,docs)=>{
+    await users.find({email}, (err,docs)=>{
         if (err) {
             throw err;
         } else {
-            console.log(docs);
-            res.send(docs);
+            if (docs.length > 0) {
+                response += 'Email address is already in use!';
+            }
         }
     });
 
+
+    await users.find({userName}, (err, docs) => {
+        if(err) {
+            throw err
+        } else {
+            if(docs.length > 0) {
+                response += 'Username is already in use!'
+            }
+        }
+    });
+
+    if (response.length > 0) {
+        res.send(response);
+    } else {
+        //create user
+        const newUser = new users({
+            userName,
+            email,
+            pass
+        }); 
+
+        newUser.save();
+        res.send(`Your account registered successfully`);
+    }
+
     
+/* 
+    
+    const emailCheck = await users.find({email});
+    const userNameCheck = await users.find({userName});
+
+    if (emailCheck.length > 0) {
+        response += 'email is already in use\n';
+    }
+
+    if (userNameCheck.length > 0) {
+        response += 'username is already in use\n';
+    }
+    
+    if (response.length === 0) {
+        //create user
+        const newUser = new users({
+            userName,
+            email,
+            pass
+        }); 
+
+        newUser.save();
+        res.send(`Your account registered successfully`);
+    } else {
+        res.send(response)
+    }
+
+     */
 }
 
-/* const newUser = new test({
-    userName: 'test1',
-    rate: '200'
-}); 
 
-newUser.save(); */
 
 /*exports.registerPost = (req, res) => {
     
