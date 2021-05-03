@@ -1,10 +1,11 @@
 const basics = require('express').Router();
+const basicsController = require('../controller/basics')
 
 
-basics.get('/', (req, res) => res.send('Hello World:)))'));
+basics.get('/', basicsController.home);
 
-basics.get('/test', (req, res) => res.send('You did a GET request to /test route!'));
-basics.post('/test', (req, res) => res.send('You did a POST request to /test route!'));
+basics.get('/test', basicsController.testGet);
+basics.post('/test', basicsController.testPost);
 
 basics.all('/about', (req, res) => res.send(`<h1 style="color: green">I'm a full stack developer</h1>`));
 

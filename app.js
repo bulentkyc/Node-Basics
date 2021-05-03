@@ -16,11 +16,32 @@ http.createServer((req, res) => {
 
 const express = require('express');
 const app = express();
+const connectDB = require('./config/db');
+const test = require('./model/test');
 const basics = require('./router/basics');
 const auth = require('./router/auth');
 
 const port = process.env.PORT || 8080;
 //const hostName = '127.0.0.1'
+
+connectDB();
+
+test.find({userName:'bulentkyc'}, (err,docs)=>{
+    if (err) {
+        throw err;
+    } else {
+        console.log(docs);
+    }
+});
+/* 
+const newUser = new test({
+    userName: 'test1',
+    rate: '200'
+});
+
+newUser.save();
+ */
+
 
 let allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
